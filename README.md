@@ -7,7 +7,7 @@ Wrap of Google's [Paging library](https://developer.android.com/topic/libraries/
 
 <br>
 
-## setup
+## Setup
 Paging component implementation is encapsulated in `PagingManager`
 ```
 pagingManager = PagingManager
@@ -40,7 +40,7 @@ pagingManager = PagingManager
 
 `checkItemIds` and `checkItemContent` are used by `DiffUtil's` callback
 
-## loading data
+## Loading data
 
 `onDataRequested` is called every time when `DataSource's` callbacks are triggered,
 
@@ -48,7 +48,7 @@ there is passing two parameters:`pageIndex` ans `lastItem` for loading relevant 
 
 after loading data `PagingManager` has public method `setData(pageIndex: Int, data: List<T>)` for populating corresponding page
 
-## additional setup
+## Additional setup
 
 you can additionally set `.onReflectLoader { isVisible ->  }` and `.onReflectPlaceHolder { isVisible ->  }`,
 
