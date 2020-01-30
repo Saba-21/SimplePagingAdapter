@@ -83,11 +83,17 @@ open class BasePagingManager<T> : DiffUtil.ItemCallback<T>() {
     }
 
     fun setData(pageIndex: Int, data: List<T>) {
+        listAdapter?.addData(data)
         dataSourceFactory?.currentDataSource?.onDataLoaded(pageIndex, data)
     }
 
     fun refreshData() {
+        listAdapter?.clearData()
         dataSourceFactory?.currentDataSource?.invalidate()
+    }
+
+    fun updateItemAt(newItem: T, position: Int) {
+        listAdapter?.onUpdateItem(newItem, position)
     }
 
     override fun areItemsTheSame(oldItem: T, newItem: T)

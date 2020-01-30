@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
             .setPageSize(1)
             .setLayout(R.layout.simple_item)
             .onItemBind { itemView, position, item ->
-                itemView.tvValue.text = item.id.toString()
+                onBindItem(position, itemView, item)
             }.onReflectLoader { isVisible ->
                 reflectLoader(isVisible)
             }.onReflectPlaceHolder { isVisible ->
@@ -44,6 +44,17 @@ class MainActivity : AppCompatActivity() {
         rvContent.adapter = pagingManager.getAdapter()
         rvContent.layoutManager = LinearLayoutManager(this)
 
+    }
+
+    private fun onBindItem(
+        position: Int,
+        itemView: View,
+        item: SimpleModel
+    ) {
+        itemView.tvValue.text = item.id.toString()
+        itemView.setOnClickListener {
+            pagingManager.updateItemAt(item.copy(id = item.id - 1000000), position)
+        }
     }
 
     private fun reflectPlaceHolder(isVisible: Boolean) {
@@ -72,9 +83,9 @@ class MainActivity : AppCompatActivity() {
                     emptyList()
             )
 
-        }, 1000)
+        }, 500)
     }
 
-    class SimpleModel(val id: Long)
+    data class SimpleModel(val id: Long)
 
 }
