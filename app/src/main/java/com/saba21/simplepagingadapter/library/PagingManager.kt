@@ -3,6 +3,7 @@ package com.saba21.simplepagingadapter.library
 import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import com.saba21.simplepagingadapter.library.list.SimpleAdapter
+import java.lang.ref.WeakReference
 
 class PagingManager<T> : BasePagingManager<T>() {
 
@@ -11,7 +12,7 @@ class PagingManager<T> : BasePagingManager<T>() {
     }
 
     fun setLifecycle(lifecycleOwner: LifecycleOwner): PagingManager<T> {
-        this.lifecycleOwner = lifecycleOwner
+        this.lifecycleOwner = WeakReference(lifecycleOwner)
         return this
     }
 

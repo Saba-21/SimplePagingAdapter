@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.saba21.simplepagingadapter.library.PagingManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.simple_item.view.*
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         pagingManager = PagingManager
             .builder<SimpleModel>()
             .setLifecycle(this)
-            .setPageSize(1)
+            .setPageSize(10)
             .setLayout(R.layout.simple_item)
             .onItemBind { itemView, position, item ->
                 onBindItem(position, itemView, item)
@@ -51,9 +52,9 @@ class MainActivity : AppCompatActivity() {
         itemView: View,
         item: SimpleModel
     ) {
-        itemView.tvValue.text = item.id.toString()
+        itemView.tvValue.text = item.id
         itemView.setOnClickListener {
-            pagingManager.updateItemAt(item.copy(id = item.id - 1000000), position)
+            pagingManager.updateItemAt(item.copy(id = item.id.toUpperCase()), position)
         }
     }
 
@@ -77,8 +78,8 @@ class MainActivity : AppCompatActivity() {
 
             pagingManager.setData(
                 pageIndex,
-                if (pageIndex < 100)
-                    listOf(SimpleModel(System.currentTimeMillis()))
+                if (pageIndex < 10)
+                    (0 until 10).map { SimpleModel(UUID.randomUUID().toString()) }
                 else
                     emptyList()
             )
@@ -86,6 +87,6 @@ class MainActivity : AppCompatActivity() {
         }, 500)
     }
 
-    data class SimpleModel(val id: Long)
+    data class SimpleModel(val id: String)
 
 }

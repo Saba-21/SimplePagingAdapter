@@ -11,10 +11,11 @@ import androidx.recyclerview.widget.DiffUtil
 import com.saba21.simplepagingadapter.library.dataLoading.SimpleDataSource
 import com.saba21.simplepagingadapter.library.dataLoading.SimpleDataSourceFactory
 import com.saba21.simplepagingadapter.library.list.SimpleAdapter
+import java.lang.ref.WeakReference
 
 open class BasePagingManager<T> : DiffUtil.ItemCallback<T>() {
 
-    protected var lifecycleOwner: LifecycleOwner? = null
+    protected var lifecycleOwner: WeakReference<LifecycleOwner>? = null
     protected var layout: Int? = null
     protected var pageSize: Int? = null
 
@@ -76,7 +77,7 @@ open class BasePagingManager<T> : DiffUtil.ItemCallback<T>() {
 
         val pageSubject = LivePagedListBuilder(dataSourceFactory!!, pageConfig).build()
 
-        pageSubject.observe(lifecycleOwner!!, Observer {
+        pageSubject.observe(lifecycleOwner!!.get() ?: return, Observer {
             listAdapter!!.submitList(it)
         })
 
