@@ -40,8 +40,18 @@ class PagingManager<T> : BasePagingManager<T>() {
         return this
     }
 
-    fun onDataRequested(onDataRequested: (pageIndex: Int) -> Unit): PagingManager<T> {
+    fun onDataRequested(onDataRequested: (pageIndex: Int, lastItem: T?) -> Unit): PagingManager<T> {
         this.onDataRequested = onDataRequested
+        return this
+    }
+
+    fun onReflectLoader(onReflectLoader: (isVisible: Boolean) -> Unit): PagingManager<T> {
+        this.onReflectLoader = onReflectLoader
+        return this
+    }
+
+    fun onReflectPlaceHolder(onReflectPlaceHolder: (isVisible: Boolean) -> Unit): PagingManager<T> {
+        this.onReflectPlaceHolder = onReflectPlaceHolder
         return this
     }
 
